@@ -71,7 +71,31 @@ resource "local_file" "ansible_inventory" {
 }
 
 ##
-## here we create the customize the Ansible plyabook
+## here we create the Ansible Configuration 
+## to be used by Ansible 
+##
+data "template_file" "ansible_cfg" {
+  template   = "${file("${path.module}/templates/ansible_cfg.tpl")}"
+  depends_on = ["azurerm_virtual_machine.vault"]
+
+  vars {
+    ansible_user = "${var.global_admin_username)}"
+  }
+}
+
+##
+## here we write the rendered ansible configuration
+## on the Terraform exec environment (the shell where the terraform binary runs)
+##
+resource "local_file" "ansible_cfg" {
+  depends_on = ["data.template_file.ansible_cfg"]
+
+  content  = "${data.template_file.ansible_cfg.rendered}"
+  filename = "${path.module}/ansible/.ansible.cfg"
+}
+
+##
+## here we create the customize the Ansible playbook
 ## to be used as input for Ansible deployment
 ##
 data "template_file" "ansible_site" {
