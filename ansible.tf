@@ -79,7 +79,7 @@ data "template_file" "ansible_cfg" {
   depends_on = ["azurerm_virtual_machine.vault"]
 
   vars {
-    ansible_user = "${var.global_admin_username)}"
+    ansible_user = "${var.global_admin_username}"
   }
 }
 
@@ -151,15 +151,13 @@ resource "null_resource" "ansible_copy" {
   }
 }
 
-
 ##
 ## here we copy the local file to the bastion
 ## using a "null_resource" to be able to trigger a file provisioner
 ##
 resource "null_resource" "ansible_ssh_id" {
-
   provisioner "file" {
-    content      = "${file(var.id_rsa_path)}"
+    content     = "${file(var.id_rsa_path)}"
     destination = "~/.ssh/id_rsa"
 
     connection {
@@ -175,11 +173,9 @@ resource "null_resource" "ansible_ssh_id" {
 resource "null_resource" "ansible_run" {
   depends_on = ["null_resource.ansible_ssh_id", "null_resource.ansible_copy", "local_file.ansible_inventory", "azurerm_virtual_machine.bastion", "azurerm_virtual_machine.vault", "azurerm_virtual_machine.consul", "azurerm_virtual_machine_extension.bastion"]
 
-
   triggers {
     always_run = "${timestamp()}"
   }
-
 
   connection {
     type        = "ssh"
@@ -188,7 +184,6 @@ resource "null_resource" "ansible_run" {
     private_key = "${file(var.id_rsa_path)}"
     insecure    = true
   }
-
 
   provisioner "remote-exec" {
     inline = [
@@ -199,4 +194,3 @@ resource "null_resource" "ansible_run" {
     ]
   }
 }
-

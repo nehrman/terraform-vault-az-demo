@@ -88,7 +88,7 @@ resource "azurerm_key_vault_key" "vault_unseal" {
   vault_uri  = "${azurerm_key_vault.vault_unseal.vault_uri}"
   key_type   = "RSA"
   key_size   = 2048
-  depends_on = ["azurerm_key_vault_access_policy.vault_unseal_spn","azurerm_key_vault_access_policy.vault_unseal"]
+  depends_on = ["azurerm_key_vault_access_policy.vault_unseal_spn", "azurerm_key_vault_access_policy.vault_unseal"]
 
   key_opts = [
     "decrypt",
