@@ -85,7 +85,7 @@ Have a look to variables.tf and customize what you need regarding :
 ## Special thanks
 
 * **Joern Stenkamp** - For the inspiration on auto generated ansible inventory [Github](https://github.com/joestack)
-* ** Brian Shumate** - For his incredilble Ansible Roles [Github](https://github.com/brianshumate)
+* **Brian Shumate** - For his incredilble Ansible Roles [Github](https://github.com/brianshumate)
 
 ## Authors
 
