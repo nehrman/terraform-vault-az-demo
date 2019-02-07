@@ -1,14 +1,17 @@
 variable "global_admin_username" {
-  default = "hashiadmin"
+  description = "Username that will be used to connect to VMs and by ANsible Playbook"
+  default     = "hashiadmin"
 }
 
 variable "id_rsa_path" {
-  default = "~/.ssh/id_rsa_az"
+  description = "Path to the Private key that will be pushed to Bastion Host"
+  default     = ""
 }
 
 variable "ssh_public_key" {
-  type    = "list"
-  default = ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4oo5BbgZwTRrm9H0gVBveYV6Rx/7ORskgz0MGcAfTRFlYfkpnZFDEox9B1xBavWUCpIKwTLgHwzcepiQ9+8hK280pMpCqnp5Q3e2EGJ3tHji6vPhZFNFjhq2b8nhY1aQFxt31L3pX2kZwjPa5cfRkeyUCwxqbbyar5sks8JxBA2l+KhelM1fR8jcXHF9MUWHfxL8bjw9AmD24p3j35UmU3yQZGShITvFdEgnLOaOXjwqylrTK0XzV4R0AO7sJrse97xZaD3jYUEFCxqf1xo2rRSD2y2goQ8WnVv66Ep9CVg/jMG99UCWNCfKZSCsopM4xBP5h5YOSC6QyBDBjXfT/ nicolas@MacBook-Pro-de-Nicolas.local"]
+  deqscription = "Put here the public keys that you want in your authrized_keys file"
+  type         = "list"
+  default      = [""]
 }
 
 variable "tf_az_name" {
