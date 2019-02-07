@@ -1,0 +1,15 @@
+# Compiled Files
+*.tfstate
+*.tfstate.backup
+
+# Module Directory
+.terraform/
+
+# Connection File
+connections.tf
+
+.DS_store
+
+# Ansible Directory
+ansible/*
+
