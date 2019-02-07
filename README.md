@@ -71,7 +71,6 @@ tf_az_vault_nb_instance   = "2"
 
 consul_version  = "1.4.2"
 vault_version   = "1.0.2"
-## How to customize yours :)
 ```
 
 ## You want more ??? 
