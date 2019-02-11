@@ -6,7 +6,7 @@
 .terraform/
 
 # Terraform tfvars file
-.tfvars
+*.tfvars
 
 # Connection File
 connections.tf
