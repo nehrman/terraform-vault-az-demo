@@ -73,6 +73,13 @@ consul_version  = "1.4.2"
 vault_version   = "1.0.2"
 ```
 
+## Variables
+
+
+## Outputs
+
+
+
 ## You want more ??? 
 
 Have a look to variables.tf and customize what you need regarding :

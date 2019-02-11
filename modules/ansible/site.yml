@@ -1,0 +1,42 @@
+- name: Configure Consul cluster
+  hosts: consul_instances
+  any_errors_fatal: true
+  become: true
+  become_user: root
+  roles:
+    - {role: ansible-consul}
+  vars:
+    ansible_ssh_user: hashiadmin
+    consul_iface: eth0
+    consul_install_remotely: true
+    consul_version: 1.4.2
+    consul_dnsmasq_enable: true
+    consul_install_upgrade: true
+    consul_pkg: "consul-enterprise_{{consul_version}}+ent_linux_amd64.zip"
+    consul_checksum_file_url: https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/consul/ent/{{consul_version}}/consul-enterprise_{{consul_version}}%2Bent_SHA256SUMS
+    consul_zip_url: https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/consul/ent/{{consul_version}}/consul-enterprise_{{consul_version}}%2Bent_linux_amd64.zip
+
+- name: Install Vault
+  hosts: vault_instances
+  any_errors_fatal: true
+  become: true
+  become_user: root
+  roles:
+    - {role: ansible-vault}
+  vars:
+    ansible_ssh_user: hashiadmin
+    vault_azurekeyvault: true
+    vault_azurekeyvault_tenant_id: 0e3e2e88-8caf-41ca-b4da-e3b33b6c52ec
+    vault_azurekeyvault_vault_name: hashivault6fPbkA
+    vault_azurekeyvault_key_name: generated-certificate
+    vault_iface: eth0
+    vault_install_remotely: true
+    vault_version: 1.0.2
+    vault_api_addr: https://{{inventory_hostname}}:8200
+    vault_pkg: vault-enterprise_1.0.2+ent_linux_amd64.zip
+    vault_checksum_file_url: https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/vault/ent/{{vault_version}}/vault-enterprise_1.0.2%2Bent_SHA256SUMS
+    vault_zip_url: https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/vault/ent/{{vault_version}}/vault-enterprise_1.0.2%2Bent_linux_amd64.zip
+    vault_performance_standby_disable: true
+    vault_ui: true
+    vault_tls_disable: true
+    vault_awskms: false

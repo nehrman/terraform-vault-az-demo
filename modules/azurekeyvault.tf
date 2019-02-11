@@ -1,9 +1,13 @@
+# here, we define a random id that will be used by Azure Key Vaukt Name.
+
 resource "random_id" "vault_unseal" {
   byte_length = "4"
 }
 
+# Create the Azure Key Vault Configuration. Be careful with the name that must be unique inside Azure.
+
 resource "azurerm_key_vault" "vault_unseal" {
-  name                            = "${var.tf_az_prefix}vault${random_id.vault_unseal.id}"
+  name                            = "${var.az_prefix}vault${random_id.vault_unseal.id}"
   location                        = "${azurerm_resource_group.rg.location}"
   resource_group_name             = "${azurerm_resource_group.rg.name}"
   enabled_for_disk_encryption     = true
@@ -15,11 +19,13 @@ resource "azurerm_key_vault" "vault_unseal" {
     name = "standard"
   }
 
-  tags = "${var.tf_az_tags}"
+  tags = "${var.az_tags}"
 }
 
+# Create the Access Policy for Vault Virtual Machines to allow them to have access to the key faut auto-unseal process.
+
 resource "azurerm_key_vault_access_policy" "vault_unseal_spn" {
-  count        = "${var.tf_az_vault_nb_instance}"
+  count        = "${var.az_vault_nb_instance}"
   key_vault_id = "${azurerm_key_vault.vault_unseal.id}"
 
   tenant_id  = "${data.azurerm_client_config.current.tenant_id}"
@@ -51,6 +57,8 @@ resource "azurerm_key_vault_access_policy" "vault_unseal_spn" {
     "delete",
   ]
 }
+
+# Create Access Policy to authorize the Service Principal Name used for Terraform operations to create the Key.
 
 resource "azurerm_key_vault_access_policy" "vault_unseal" {
   key_vault_id = "${azurerm_key_vault.vault_unseal.id}"
@@ -84,6 +92,8 @@ resource "azurerm_key_vault_access_policy" "vault_unseal" {
     "delete",
   ]
 }
+
+# Create Azure Key Vault key to be used for Vault Auto-Unseal.
 
 resource "azurerm_key_vault_key" "vault_unseal" {
   name         = "generated-certificate"

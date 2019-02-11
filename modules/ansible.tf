@@ -1,20 +1,12 @@
-## dynamically generate a `inventory` file for Ansible Configuration Automation 
-
-##
-## here we create the list of available Consul Server Nodes
-## to be used as input for the GROUPS template
-##
 data "template_file" "ansible_consul_server_hosts" {
-  count      = "${var.tf_az_consul_nb_instance}"
+  count      = "${var.az_consul_nb_instance}"
   template   = "${file("${path.module}/templates/ansible_consul_server_hosts.tpl")}"
   depends_on = ["azurerm_virtual_machine.consul", "azurerm_virtual_machine.vault"]
 
   vars {
     consul_node_server_name = "${element(azurerm_virtual_machine.consul.*.name, count.index)}"
-
-    # consul_server_role      = "${lookup(azurerm_virtual_machine.consul.*.tags[count.index], "consul_role")}
-    consul_server_role  = "${element(azurerm_virtual_machine.consul.*.name, count.index) == element(azurerm_virtual_machine.consul.*.name, 0) ? var.consul_role_bootstrap : var.consul_role_server}"
-    consul_bind_address = "${element(azurerm_network_interface.consul.*.private_ip_address, count.index)}"
+    consul_server_role      = "${element(azurerm_virtual_machine.consul.*.name, count.index) == element(azurerm_virtual_machine.consul.*.name, 0) ? var.consul_role_bootstrap : var.consul_role_server}"
+    consul_bind_address     = "${element(azurerm_network_interface.consul.*.private_ip_address, count.index)}"
   }
 }
 
@@ -23,7 +15,7 @@ data "template_file" "ansible_consul_server_hosts" {
 ## to be used as input for the GROUPS template
 ##
 data "template_file" "ansible_consul_client_hosts" {
-  count      = "${var.tf_az_vault_nb_instance}"
+  count      = "${var.az_vault_nb_instance}"
   template   = "${file("${path.module}/templates/ansible_consul_client_hosts.tpl")}"
   depends_on = ["azurerm_virtual_machine.vault"]
 
@@ -37,7 +29,7 @@ data "template_file" "ansible_consul_client_hosts" {
 ## to be used as input for the GROUPS template
 ##
 data "template_file" "ansible_vault_hosts" {
-  count      = "${var.tf_az_vault_nb_instance}"
+  count      = "${var.az_vault_nb_instance}"
   template   = "${file("${path.module}/templates/ansible_vault_hosts.tpl")}"
   depends_on = ["azurerm_virtual_machine.vault"]
 
@@ -99,7 +91,7 @@ resource "local_file" "ansible_cfg" {
 ## to be used as input for Ansible deployment
 ##
 data "template_file" "ansible_site" {
-  #  count      = "${var.tf_az_consul_nb_instance}"
+  #  count      = "${var.az_consul_nb_instance}"
   template   = "${file("${path.module}/templates/site.tpl")}"
   depends_on = ["azurerm_virtual_machine.consul", "azurerm_virtual_machine.vault"]
 
