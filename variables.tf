@@ -5,13 +5,13 @@ variable "global_admin_username" {
 
 variable "id_rsa_path" {
   description = "Path to the Private key that will be pushed to Bastion Host"
-  default     = ""
+  default     = "~/.ssh/id_rsa_az"
 }
 
 variable "ssh_public_key" {
-  deqscription = "Put here the public keys that you want in your authrized_keys file"
-  type         = "list"
-  default      = [""]
+  description = "Put here the public keys that you want in your authrized_keys file"
+  type        = "list"
+  default     = [""]
 }
 
 variable "tf_az_name" {
