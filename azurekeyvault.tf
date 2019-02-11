@@ -1,5 +1,9 @@
+resource "random_id" "vault_unseal" {
+  byte_length = "4"
+}
+
 resource "azurerm_key_vault" "vault_unseal" {
-  name                            = "testvaultvault"
+  name                            = "${var.tf_az_prefix}vault${random_id.vault_unseal.id}"
   location                        = "${azurerm_resource_group.rg.location}"
   resource_group_name             = "${azurerm_resource_group.rg.name}"
   enabled_for_disk_encryption     = true
