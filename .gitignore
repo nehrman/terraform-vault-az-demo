@@ -5,6 +5,9 @@
 # Module Directory
 .terraform/
 
+# Terraform tfvars file
+.tfvars
+
 # Connection File
 connections.tf
 
