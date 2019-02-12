@@ -9,7 +9,7 @@
 *.tfvars
 
 # Connection File
-connections.tf
+connection.tf
 
 .DS_store
 
