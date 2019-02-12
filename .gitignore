@@ -13,4 +13,9 @@ connections.tf
 
 .DS_store
 
+# Ansible files
+.ansible.cfg
+hosts
+*.yml
+
 
