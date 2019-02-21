@@ -1,4 +1,4 @@
-# here, we define a random id that will be used by Azure Key Vaukt Name.
+# here, we define a random id that will be used by Azure Key Vault Name.
 
 resource "random_id" "vault_unseal" {
   byte_length = "4"

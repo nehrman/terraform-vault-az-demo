@@ -1,4 +1,4 @@
-# Grab Client Configu Information to resue it later.
+# Grab Client Configuration Information to reuse it later.
 
 data "azurerm_client_config" "current" {}
 

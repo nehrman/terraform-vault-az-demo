@@ -1,3 +1,8 @@
+##
+## here we create the list of available Consul Client nodes
+## to be used as input for the ansible_groups template
+##
+
 data "template_file" "ansible_consul_server_hosts" {
   count      = "${var.az_consul_nb_instance}"
   template   = "${file("${path.module}/templates/ansible_consul_server_hosts.tpl")}"
@@ -12,7 +17,7 @@ data "template_file" "ansible_consul_server_hosts" {
 
 ##
 ## here we create the list of available Consul Client nodes
-## to be used as input for the GROUPS template
+## to be used as input for the ansible_groups template
 ##
 data "template_file" "ansible_consul_client_hosts" {
   count      = "${var.az_vault_nb_instance}"
@@ -26,7 +31,7 @@ data "template_file" "ansible_consul_client_hosts" {
 
 ##
 ## here we create the list of available Vault nodes
-## to be used as input for the GROUPS template
+## to be used as input for the ansible_groups template
 ##
 data "template_file" "ansible_vault_hosts" {
   count      = "${var.az_vault_nb_instance}"

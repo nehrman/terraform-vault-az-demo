@@ -5,6 +5,7 @@ resource "azurerm_public_ip" "bastion" {
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.az_location}"
   allocation_method   = "${var.az_pubip_address_alloc}"
+  domain_name_label   = "{var.az_env}-${var.az_prefix}-bastion-${count.index}"
   tags                = "${var.az_tags}"
 }
 
